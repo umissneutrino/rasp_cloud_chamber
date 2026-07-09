@@ -1,20 +1,29 @@
 from time import sleep
 import os
-## python built in library to pasuse a program for a given amount of time
 
-## We import function from the temperature_sensor.py file to read the temperature from the sensor  
-from temperature_sensor import (
-    read_all_temperatures
-)
+from temperature_sensor import read_all_temperatures
 
-COLUMN_WIDTH = 25  # Width of each column in the table
+
+# Width of each sensor column in the terminal display.
+COLUMN_WIDTH = 28
 
 
 def clear_terminal():
+    """
+    Clear the terminal screen.
+
+    This makes the program look like a live dashboard instead of printing
+    endless lines forever.
+    """
+
     os.system("clear")
 
 
 def format_temperature(sensor_data):
+    """
+    Format one sensor's temperature as a readable string.
+    """
+
     celsius = sensor_data["celsius"]
     fahrenheit = sensor_data["fahrenheit"]
 
@@ -22,6 +31,14 @@ def format_temperature(sensor_data):
 
 
 def print_sensor_columns(temperatures):
+    """
+    Print all sensors in columns.
+
+    If one sensor is connected, it prints one column.
+    If two sensors are connected, it prints two columns.
+    If more sensors are connected, it automatically adds more columns.
+    """
+
     sensor_names = list(temperatures.keys())
 
     header_row = ""
@@ -39,12 +56,14 @@ def print_sensor_columns(temperatures):
     print(id_row)
     print(temperature_row)
 
-# this is the main function that will be called when the program is run, it will 
-# find the sensor file, and then it will read the temperature from the sensor file 
-# and print it to the terminal. It will also handle any exceptions that may occur 
-# while reading the temperature and print an error message to the terminal. 
-# The program will run in a loop until the user presses Ctrl+C to exit the program.
+
 def main():
+    """
+    Main program loop.
+
+    This keeps reading the sensors once every second until the user presses Ctrl+C.
+    """
+
     while True:
         clear_terminal()
 
