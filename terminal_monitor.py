@@ -15,7 +15,7 @@ def format_temperature(sensor_data):
     celsius = sensor_data["celsius"]
     fahrenheit = sensor_data["fahrenheit"]
 
-    return f"{celsius:.2f} °C / {fahrenheit:.2f} °F"
+    return f"{celsius:.2f} °C | {fahrenheit:.2f} °F"
 
 
 def print_sensor_columns(temperatures):
