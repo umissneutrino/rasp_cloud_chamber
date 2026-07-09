@@ -7,10 +7,22 @@ SENSOR_ROOT = Path("/sys/bus/w1/devices")
 
 ##this function is used to find the sensor file, and it will return the path to the sensor file, if it is not found it will raise a FileNotFoundError
 def find_sensor_file():
-    sensor_dirs = list(SENSOR_ROOT.glob("28-*"))
+    sensor_dirs = sorted(SENSOR_ROOT.glob("28-*"))
+
     if not sensor_dirs:
         raise FileNotFoundError("No DS18B20 sensor found, check the wiring and 1-wire setup.")
-    return sensor_dirs[0] / "w1_slave"
+    
+    sensor_file = {}
+    for index, sensor_dir in enumerate(sensor_dirs, start=1):
+        sensor_name = f"Sensor {index}"
+        sensor_id = sensor_dir.name
+        sensor_file = sensor_id / "w1_slave"
+
+        sensor_file(sensor_name)={
+            "id" : sensor_id,
+            "file" : sensor_file
+        }
+    return sensor_file
 
 
 ## inside the sensor folder the temperature reading is stored inside the w1_slave folder,
@@ -58,3 +70,22 @@ def read_temperature_celsius(sensor_file):
     temperature_celsius = parse_temperature_celsius(raw_text)   
 
     return temperature_celsius
+def read_all_temperatures():
+    sensor_files = find_sensor_file()
+
+    temperatures = {}
+
+    for sensor_name, sensor_info in sensor_files.items():
+        sensor_id = sensor_info["id"]
+        sensor_file = sensor_info["file"]
+
+        temperature_celsius = read_temperature_celsius(sensor_file)
+        temperature_fahrenheit = celsius_to_farenheit(temperature_celsius)
+
+        temperatures[sensor_name] = {
+            "id": sensor_id,
+            "celsius": temperature_celsius,
+            "fahrenheit": temperature_fahrenheit,
+        }
+
+    return temperatures
