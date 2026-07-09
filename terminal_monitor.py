@@ -1,27 +1,15 @@
 from time import sleep
-import os
+from datetime import datetime
 
 from temperature_sensor import read_all_temperatures
 
 
-# Width of each sensor column in the terminal display.
 COLUMN_WIDTH = 28
-
-
-def clear_terminal():
-    """
-    Clear the terminal screen.
-
-    This makes the program look like a live dashboard instead of printing
-    endless lines forever.
-    """
-
-    os.system("clear")
 
 
 def format_temperature(sensor_data):
     """
-    Format one sensor's temperature as a readable string.
+    Convert one sensor's temperature data into a clean display string.
     """
 
     celsius = sensor_data["celsius"]
@@ -32,11 +20,9 @@ def format_temperature(sensor_data):
 
 def print_sensor_columns(temperatures):
     """
-    Print all sensors in columns.
+    Print all sensors side-by-side in columns.
 
-    If one sensor is connected, it prints one column.
-    If two sensors are connected, it prints two columns.
-    If more sensors are connected, it automatically adds more columns.
+    The number of columns automatically depends on the number of sensors detected.
     """
 
     sensor_names = list(temperatures.keys())
@@ -59,23 +45,29 @@ def print_sensor_columns(temperatures):
 
 def main():
     """
-    Main program loop.
+    Main terminal monitor.
 
-    This keeps reading the sensors once every second until the user presses Ctrl+C.
+    This keeps printing temperature readings once every second.
+    Press Ctrl+C to stop the program.
     """
 
+    print("Cloud Chamber Temperature Monitor")
+    print("Press Ctrl+C to stop.\n")
+
     while True:
-        clear_terminal()
-
-        print("Cloud Chamber Temperature Monitor")
-        print("Press Ctrl+C to stop.\n")
-
         try:
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            print(f"Time: {current_time}")
+
             temperatures = read_all_temperatures()
             print_sensor_columns(temperatures)
 
+            print("-" * 80)
+
         except Exception as error:
             print(f"Error reading sensors: {error}")
+            print("-" * 80)
 
         sleep(1)
 
