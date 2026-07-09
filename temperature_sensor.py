@@ -18,7 +18,7 @@ def find_sensor_file():
         sensor_id = sensor_dir.name
         sensor_file = sensor_id / "w1_slave"
 
-        sensor_file(sensor_name)={
+        sensor_file[sensor_name]={
             "id" : sensor_id,
             "file" : sensor_file
         }
