@@ -1,13 +1,19 @@
+## a python library called tkinter which is used for creating GUIs
+## helps us make windows, labels, buttons, and app features
 import tkinter as tk
 from datetime import datetime
 
+## importing the backend data form our backend file
 from temperature_sensor import read_all_temperatures
 
-
+#constant variables
+##1000 is in millisecond, so teh GUI would refresh every 1 second
 REFRESH_RATE_MS = 1000
 
-
+## using OOPS concept to create a class for our GUI
+## this class contains the main window, title sensor display area, status and update functions
 class CloudChamberGUI:
+    ## the constructor function
     def __init__(self, root):
         self.root = root
         self.root.title("Cloud Chamber Temperature Monitor")
@@ -108,3 +114,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    ## to do
+    ## adding more features for the new sensors
+    ## adding more comments to the code, to explain the code .
+    
