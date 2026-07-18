@@ -18,7 +18,8 @@ class CloudChamberGUI:
         self.root = root
         self.root.title("Cloud Chamber Temperature Monitor")
         self.root.geometry("700x400")
-
+    ## later we can add few other sensor stuffs that can be seen in same window,
+    ##  or we can use a toggle button to switch between different windows.
         self.title_label = tk.Label(
             self.root,
             text="Cloud Chamber Temperature Monitor",
