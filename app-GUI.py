@@ -119,4 +119,6 @@ if __name__ == "__main__":
     ## to do
     ## adding more features for the new sensors
     ## adding more comments to the code, to explain the code .
-    
+
+    ##
+#    adding new gui features related to current sesensor and voltage sensor
